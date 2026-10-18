@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Fiscord</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Anmeldung / Registrierung -->
+  <section id="auth" class="auth">
+    <div class="card">
+      <h1>Fiscord</h1>
+
+      <div class="tabs">
+        <button id="tab-login" class="tab active" type="button">Anmelden</button>
+        <button id="tab-register" class="tab" type="button">Registrieren</button>
+      </div>
+
+      <form id="login-form" class="form">
+        <input id="login-email" type="email" placeholder="E-Mail" required autocomplete="email">
+        <input id="login-password" type="password" placeholder="Passwort" required autocomplete="current-password">
+        <button class="btn" type="submit">Anmelden</button>
+      </form>
+
+      <form id="register-form" class="form" hidden>
+        <input id="reg-username" placeholder="Benutzername (3–32 Zeichen)" required minlength="3" maxlength="32" autocomplete="username">
+        <input id="reg-email" type="email" placeholder="E-Mail" required autocomplete="email">
+        <input id="reg-password" type="password" placeholder="Passwort (mind. 8 Zeichen)" required minlength="8" autocomplete="new-password">
+        <button class="btn" type="submit">Konto erstellen</button>
+      </form>
+
+      <p id="auth-msg" class="msg-box" hidden></p>
+    </div>
+  </section>
+
+  <!-- Hauptansicht -->
+  <div id="app" class="app" hidden>
+    <nav class="servers">
+      <div id="server-list" class="servers-list"></div>
+      <button id="btn-add-server" class="server-btn add" type="button" title="Server erstellen oder beitreten">+</button>
+    </nav>
+
+    <aside class="channels">
+      <header>
+        <h2 id="server-name">Kein Server</h2>
+        <button id="btn-invite" class="icon-btn" type="button" title="Einladungscode kopieren" hidden>🔗</button>
+      </header>
+      <div class="channel-head">
+        <span>Kanäle</span>
+        <button id="btn-add-channel" class="icon-btn" type="button" title="Kanal erstellen" hidden>+</button>
+      </div>
+      <ul id="channel-list"></ul>
+      <footer class="me">
+        <span id="me-name"></span>
+        <button id="btn-logout" class="link-btn" type="button">Abmelden</button>
+      </footer>
+    </aside>
+
+    <main class="chat">
+      <header class="chat-head"><span id="channel-title"></span></header>
+      <div id="messages" class="messages"></div>
+      <form id="send-form" class="send-form">
+        <input id="msg-input" maxlength="2000" placeholder="Kein Kanal ausgewählt" autocomplete="off" disabled>
+      </form>
+    </main>
+  </div>
+
+  <!-- Dialog: Server erstellen / beitreten / Kanal erstellen -->
+  <dialog id="dlg">
+    <section id="sec-create-server" class="dlg-section">
+      <h3>Server erstellen</h3>
+      <form id="form-create-server" class="form">
+        <input id="create-server-name" required maxlength="100" placeholder="Servername">
+        <div class="dlg-actions">
+          <button class="btn secondary" type="button" data-close>Abbrechen</button>
+          <button class="btn" type="submit">Erstellen</button>
+        </div>
+      </form>
+      <button class="link-btn" type="button" id="btn-show-join">Stattdessen einem Server beitreten</button>
+    </section>
+
+    <section id="sec-join-server" class="dlg-section" hidden>
+      <h3>Server beitreten</h3>
+      <form id="form-join-server" class="form">
+        <input id="join-code" required maxlength="32" placeholder="Einladungscode">
+        <div class="dlg-actions">
+          <button class="btn secondary" type="button" data-close>Abbrechen</button>
+          <button class="btn" type="submit">Beitreten</button>
+        </div>
+      </form>
+      <button class="link-btn" type="button" id="btn-show-create">Stattdessen einen Server erstellen</button>
+    </section>
+
+    <section id="sec-create-channel" class="dlg-section" hidden>
+      <h3>Kanal erstellen</h3>
+      <form id="form-create-channel" class="form">
+        <input id="channel-name" required maxlength="50" placeholder="kanalname">
+        <div class="dlg-actions">
+          <button class="btn secondary" type="button" data-close>Abbrechen</button>
+          <button class="btn" type="submit">Erstellen</button>
+        </div>
+      </form>
+    </section>
+
+    <p id="dlg-error" class="dlg-error" hidden></p>
+  </dialog>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
