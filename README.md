@@ -63,6 +63,12 @@ Damit der Link in der Mail zurück auf deine Seite zeigt:
 
 Falls du den Namen des Repos änderst, passt auch die URL aus Schritt 4 nicht mehr.
 
+## 6b. Migration 2 ausführen (neue Funktionen)
+
+Falls du `schema.sql` schon einmal ausgeführt hast, führe danach zusätzlich `supabase/migration-2.sql` im SQL Editor aus. Sie ergänzt Bearbeiten, Löschen und Mitglieder-Verwaltung.
+
+Für den Passwort-Reset muss außerdem die Seite unter **Redirect URLs** eingetragen sein (siehe Schritt 4). Die Reset-Mail nutzt dieselbe Adresse.
+
 ## 7. Testen
 
 1. Seite öffnen, **Registrieren** wählen, Benutzername, E-Mail und Passwort eingeben.
@@ -82,11 +88,9 @@ Falls du den Namen des Repos änderst, passt auch die URL aus Schritt 4 nicht me
 **Rechte:** Nur der Besitzer eines Servers kann Kanäle erstellen und löschen. Jeder Nutzer kann nur als er selbst schreiben und eigene Mitgliedschaften verlassen.
 
 **Bekannte Grenzen (bewusst weggelassen, um es schlank zu halten):**
-- Kein Passwort-Reset („Passwort vergessen“). Das lässt sich über `supabase.auth.resetPasswordForEmail` nachrüsten.
 - Keine Dateianhänge, Sprachchats, Direktnachrichten oder Rollen.
-- Nachrichten werden in Kanälen geladen, die letzten 50. Ältere Nachrichten sind noch nicht über Scrollen abrufbar.
 - Nachrichten, die genau zwischen Laden und Abonnieren eines Kanals eintreffen, können fehlen. Ein erneutes Öffnen des Kanals zeigt sie.
-- Nachrichten im Chat zeigen nur Text. Löschen und Bearbeiten fehlen in der Oberfläche.
+- Formatierung nur `**fett**`, `*kursiv*` und `` `code` ``.
 
 ## Fehlersuche
 

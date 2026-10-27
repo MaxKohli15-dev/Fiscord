@@ -8,12 +8,12 @@
 </head>
 <body>
 
-  <!-- Anmeldung / Registrierung -->
+  <!-- Anmeldung, Registrierung, Passwort zurücksetzen -->
   <section id="auth" class="auth">
     <div class="card">
       <h1>Fiscord</h1>
 
-      <div class="tabs">
+      <div id="tabs" class="tabs">
         <button id="tab-login" class="tab active" type="button">Anmelden</button>
         <button id="tab-register" class="tab" type="button">Registrieren</button>
       </div>
@@ -22,6 +22,7 @@
         <input id="login-email" type="email" placeholder="E-Mail" required autocomplete="email">
         <input id="login-password" type="password" placeholder="Passwort" required autocomplete="current-password">
         <button class="btn" type="submit">Anmelden</button>
+        <button id="forgot-link" class="link-btn center" type="button">Passwort vergessen?</button>
       </form>
 
       <form id="register-form" class="form" hidden>
@@ -29,6 +30,19 @@
         <input id="reg-email" type="email" placeholder="E-Mail" required autocomplete="email">
         <input id="reg-password" type="password" placeholder="Passwort (mind. 8 Zeichen)" required minlength="8" autocomplete="new-password">
         <button class="btn" type="submit">Konto erstellen</button>
+      </form>
+
+      <form id="forgot-form" class="form" hidden>
+        <p class="muted">Gib deine E-Mail ein. Wir schicken dir einen Link zum Zurücksetzen.</p>
+        <input id="forgot-email" type="email" placeholder="E-Mail" required autocomplete="email">
+        <button class="btn" type="submit">Link senden</button>
+        <button id="back-to-login" class="link-btn center" type="button">Zurück zur Anmeldung</button>
+      </form>
+
+      <form id="update-form" class="form" hidden>
+        <p class="muted">Lege dein neues Passwort fest.</p>
+        <input id="new-password" type="password" placeholder="Neues Passwort (mind. 8 Zeichen)" required minlength="8" autocomplete="new-password">
+        <button class="btn" type="submit">Passwort speichern</button>
       </form>
 
       <p id="auth-msg" class="msg-box" hidden></p>
@@ -45,7 +59,7 @@
     <aside class="channels">
       <header>
         <h2 id="server-name">Kein Server</h2>
-        <button id="btn-invite" class="icon-btn" type="button" title="Einladungscode kopieren" hidden>🔗</button>
+        <button id="btn-server-menu" class="icon-btn" type="button" title="Serverinfo" hidden>⋯</button>
       </header>
       <div class="channel-head">
         <span>Kanäle</span>
@@ -59,15 +73,29 @@
     </aside>
 
     <main class="chat">
-      <header class="chat-head"><span id="channel-title"></span></header>
-      <div id="messages" class="messages"></div>
-      <form id="send-form" class="send-form">
-        <input id="msg-input" maxlength="2000" placeholder="Kein Kanal ausgewählt" autocomplete="off" disabled>
-      </form>
+      <header class="chat-head">
+        <span id="channel-title"></span>
+        <div class="head-actions">
+          <button id="btn-delete-channel" class="icon-btn" type="button" title="Kanal löschen" hidden>🗑</button>
+          <button id="btn-members" class="icon-btn" type="button" title="Mitglieder anzeigen" hidden>👥</button>
+        </div>
+      </header>
+      <div class="chat-body">
+        <div class="chat-main">
+          <div id="messages" class="messages"></div>
+          <form id="send-form" class="send-form">
+            <input id="msg-input" maxlength="2000" placeholder="Kein Kanal ausgewählt" autocomplete="off" disabled>
+          </form>
+        </div>
+        <aside id="members" class="members" hidden>
+          <h4>Mitglieder</h4>
+          <ul id="member-list"></ul>
+        </aside>
+      </div>
     </main>
   </div>
 
-  <!-- Dialog: Server erstellen / beitreten / Kanal erstellen -->
+  <!-- Dialoge -->
   <dialog id="dlg">
     <section id="sec-create-server" class="dlg-section">
       <h3>Server erstellen</h3>
@@ -102,6 +130,20 @@
           <button class="btn" type="submit">Erstellen</button>
         </div>
       </form>
+    </section>
+
+    <section id="sec-server-info" class="dlg-section" hidden>
+      <h3 id="info-title">Server</h3>
+      <p class="muted">Einladungscode zum Teilen:</p>
+      <div class="invite-row">
+        <code id="info-code"></code>
+        <button id="btn-copy-code" class="btn secondary" type="button">Kopieren</button>
+      </div>
+      <button id="btn-leave-server" class="btn danger" type="button" hidden>Server verlassen</button>
+      <button id="btn-delete-server" class="btn danger" type="button" hidden>Server löschen</button>
+      <div class="dlg-actions">
+        <button class="btn secondary" type="button" data-close>Schließen</button>
+      </div>
     </section>
 
     <p id="dlg-error" class="dlg-error" hidden></p>
